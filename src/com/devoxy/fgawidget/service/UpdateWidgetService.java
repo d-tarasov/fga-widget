@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.widget.RemoteViews;
-import com.devoxy.R;
+import com.devoxy.fgawidget.R;
 import com.devoxy.fgawidget.web.AdviceUpdater;
 import com.devoxy.fgawidget.widget.FGAWidgetProvider;
 
@@ -46,8 +46,11 @@ public class UpdateWidgetService extends Service {
 
     private RemoteViews buildUpdate(Context context) {
         RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
-        String pageContent = AdviceUpdater.getTodayAdvice();
-        updateViews.setTextViewText(R.id.advice, "- " + pageContent);
+        String advice = AdviceUpdater.getTodayAdvice();
+        if (advice == null) {
+            advice = getString(R.string.connection_problem);
+        }
+        updateViews.setTextViewText(R.id.advice, "- " + advice);
         return updateViews;
     }
 

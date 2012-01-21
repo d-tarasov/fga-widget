@@ -16,27 +16,29 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@drawable/appwidget_bg_clickable"
               android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:padding="3dp"
-              android:background="@android:color/white">
+              android:layout_height="fill_parent">
 
-    <TextView android:layout_height="wrap_content"
+    <!--<TextView android:padding="3dp"
+              android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:text="@string/fucking_great_advice"
               android:textColor="@android:color/black"/>
 
     <ImageView android:layout_height="1dp"
+               android:padding="3dp"
                android:layout_width="fill_parent"
                android:layout_marginTop="2dp"
                android:layout_marginBottom="5dp"
-               android:background="@android:color/black"/>
+               android:background="@android:color/black"/>-->
 
     <TextView android:id="@+id/advice"
+              android:padding="3dp"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:text="- Ходи зимой в двух штанах, ёпта!"
+              android:text="@string/wait_for_connection"
               android:textSize="20sp"
               android:textColor="@android:color/black"/>
 

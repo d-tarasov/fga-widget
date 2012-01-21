@@ -16,6 +16,7 @@
 
 package com.devoxy.fgawidget.web;
 
+import android.util.Log;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -41,30 +42,29 @@ import java.util.regex.Pattern;
  * Time: 21:31
  */
 public class AdviceUpdater {
+    
+    private static final String TAG = AdviceUpdater.class.getName();
 
     private static final String RSS_FEED_URL = "http://feeds.feedburner.com/365advices?format=xml";
 
     public static String getTodayAdvice() {
         try {
-            DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-            f.setValidating(false);
-            DocumentBuilder builder = f.newDocumentBuilder();
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilderFactory.setValidating(false);
+            DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
             Document doc = builder.parse(RSS_FEED_URL);
+
             NodeList items = doc.getElementsByTagName("item");
-            Node item = items.item(0);
-            NodeList itemParts = item.getChildNodes();
+            Node todayAdvice = items.item(0);
+            NodeList itemParts = todayAdvice.getChildNodes();
             for (int i = 0; i < itemParts.getLength(); i++) {
                 if ("title".equals(itemParts.item(i).getNodeName())) {
-                    Node ii = itemParts.item(i);
-                    return ii.getFirstChild().getNodeValue();
+                    Node node = itemParts.item(i);
+                    return node.getFirstChild().getNodeValue();
                 }
             }
-        } catch (ParserConfigurationException e) {
-            // TODO logging
-        } catch (SAXException e) {
-            // TODO logging
-        } catch (IOException e) {
-            // TODO logging
+        } catch (Exception e) {
+            Log.e(TAG, "cannot obtain advice", e);
         }
         return null;
     }
