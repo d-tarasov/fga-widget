@@ -15,32 +15,50 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="@drawable/appwidget_bg_clickable"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+<!-- TODO create dark version of widget -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/root"
+                android:background="@drawable/appwidget_bg_clickable"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
-    <!--<TextView android:padding="3dp"
+    <TextView android:id="@+id/fucking_great_advice"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:layout_width="wrap_content"
+              android:paddingLeft="3dp"
+              android:paddingBottom="3dp"
+              android:textSize="16sp"
               android:text="@string/fucking_great_advice"
               android:textColor="@android:color/black"/>
 
-    <ImageView android:layout_height="1dp"
-               android:padding="3dp"
+    <ImageView android:layout_height="fill_parent"
+               android:layout_width="wrap_content"
+               android:layout_alignBottom="@+id/fucking_great_advice"
+               android:layout_toLeftOf="@+id/refresh"
+               android:background="@drawable/divider_vertical_bright"/>
+
+    <Button android:id="@+id/refresh"
+            android:background="@drawable/refresh_btn"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/fucking_great_advice"
+            android:layout_height="28dp"
+            android:layout_width="28dp"/>
+
+    <ImageView android:layout_height="wrap_content"
                android:layout_width="fill_parent"
-               android:layout_marginTop="2dp"
-               android:layout_marginBottom="5dp"
-               android:background="@android:color/black"/>-->
+               android:layout_below="@+id/fucking_great_advice"
+               android:background="@drawable/divider_horizontal_bright"/>
 
     <TextView android:id="@+id/advice"
-              android:padding="3dp"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="fill_parent"
+              android:layout_below="@+id/fucking_great_advice"
+              android:gravity="center"
+              android:padding="3dp"
               android:text="@string/wait_for_connection"
               android:textSize="20sp"
               android:textColor="@android:color/black"/>
 
-</LinearLayout>
+</RelativeLayout>
 

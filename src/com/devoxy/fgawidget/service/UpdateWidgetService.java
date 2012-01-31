@@ -50,7 +50,7 @@ public class UpdateWidgetService extends Service {
         if (advice == null) {
             advice = getString(R.string.connection_problem);
         }
-        updateViews.setTextViewText(R.id.advice, "- " + advice);
+        //updateViews.setTextViewText(R.id.advice, "- " + advice);
         return updateViews;
     }
 
