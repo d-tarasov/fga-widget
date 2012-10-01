@@ -19,12 +19,13 @@ package com.devoxy.fgawidget.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 import com.devoxy.fgawidget.R;
 import com.devoxy.fgawidget.service.UpdateWidgetService;
+import com.devoxy.fgawidget.web.AdviceUpdater;
 
 /**
  * Created by Dmitriy Tarasov.
@@ -35,13 +36,7 @@ import com.devoxy.fgawidget.service.UpdateWidgetService;
  */
 public class FGAWidgetProvider extends AppWidgetProvider {
 
-    public static String ACTION = "MyAction";
     public static String ACTION_WIDGET_RECEIVER = "ActionReceiverWidget";
-    public static final int REQUEST_CODE = 0;
-
-    public FGAWidgetProvider() {
-        super();
-    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -51,9 +46,24 @@ public class FGAWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO widget update
         super.onReceive(context, intent);
-        Toast.makeText(context, "TODO update to random advice", Toast.LENGTH_LONG).show();
+        RemoteViews updateViews = buildUpdate(context);
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        appWidgetManager.updateAppWidget(
+                new ComponentName(context.getPackageName(),
+                FGAWidgetProvider.class.getName()),
+                updateViews);
+    }
+
+    private RemoteViews buildUpdate(Context context) {
+        RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
+        String advice = AdviceUpdater.getRandomAdvice(context);
+        if (advice == null) {
+            advice = context.getString(R.string.connection_problem);
+        }
+        updateViews.setTextViewText(R.id.advice, "- " + advice);
+        return updateViews;
     }
 
     private void updateView(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

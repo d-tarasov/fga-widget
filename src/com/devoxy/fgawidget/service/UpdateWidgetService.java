@@ -17,15 +17,8 @@
 package com.devoxy.fgawidget.service;
 
 import android.app.Service;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.widget.RemoteViews;
-import com.devoxy.fgawidget.R;
-import com.devoxy.fgawidget.web.AdviceUpdater;
-import com.devoxy.fgawidget.widget.FGAWidgetProvider;
 
 /**
  * Created by Dmitriy Tarasov.
@@ -38,20 +31,7 @@ public class UpdateWidgetService extends Service {
 
     @Override
     public void onStart(Intent intent, int startId) {
-        RemoteViews updateViews = buildUpdate(this);
-        ComponentName thisWidget = new ComponentName(this, FGAWidgetProvider.class);
-        AppWidgetManager manager = AppWidgetManager.getInstance(this);
-        manager.updateAppWidget(thisWidget, updateViews);
-    }
-
-    private RemoteViews buildUpdate(Context context) {
-        RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
-        String advice = AdviceUpdater.getTodayAdvice(context);
-        if (advice == null) {
-            advice = getString(R.string.connection_problem);
-        }
-        updateViews.setTextViewText(R.id.advice, "- " + advice);
-        return updateViews;
+        // nothing
     }
 
     @Override

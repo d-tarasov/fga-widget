@@ -25,6 +25,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.Random;
 
 /**
  * Created by Dmitriy Tarasov.
@@ -59,5 +60,11 @@ public class AdviceUpdater {
             Log.e(TAG, "cannot obtain advice", e);
         }
         return context.getString(R.string.connection_problem);
+    }
+
+    public static String getRandomAdvice(Context context) {
+        // TODO implementation
+        Random random = new Random();
+        return String.valueOf(random.nextInt());
     }
 }
