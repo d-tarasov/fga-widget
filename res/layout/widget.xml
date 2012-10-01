@@ -38,7 +38,7 @@
                android:layout_toLeftOf="@+id/refresh"
                android:background="@drawable/divider_vertical_bright"/>
 
-    <Button android:id="@+id/refresh"
+    <Button android:id="@id/refresh"
             android:background="@drawable/refresh_btn"
             android:layout_alignParentRight="true"
             android:layout_alignBottom="@+id/fucking_great_advice"

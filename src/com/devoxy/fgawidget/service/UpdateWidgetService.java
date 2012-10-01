@@ -46,11 +46,11 @@ public class UpdateWidgetService extends Service {
 
     private RemoteViews buildUpdate(Context context) {
         RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
-        String advice = AdviceUpdater.getTodayAdvice();
+        String advice = AdviceUpdater.getTodayAdvice(context);
         if (advice == null) {
             advice = getString(R.string.connection_problem);
         }
-        //updateViews.setTextViewText(R.id.advice, "- " + advice);
+        updateViews.setTextViewText(R.id.advice, "- " + advice);
         return updateViews;
     }
 
