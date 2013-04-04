@@ -63,7 +63,8 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/fucking_great_advice"
         android:gravity="center"
-        android:padding="3dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
         android:text="@string/wait_for_connection"
         android:textSize="20sp"
         android:textColor="@android:color/black"/>
