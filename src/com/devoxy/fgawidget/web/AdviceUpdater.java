@@ -25,7 +25,15 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.util.Random;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Dmitriy Tarasov.
@@ -35,10 +43,22 @@ import java.util.Random;
  * Time: 21:31
  */
 public class AdviceUpdater {
-    
+
     private static final String TAG = AdviceUpdater.class.getName();
 
+    private static final String MAIN_PAGE_URL = "http://fucking-great-advice.ru/";
+
     private static final String RSS_FEED_URL = "http://feeds.feedburner.com/365advices?format=xml";
+
+    private static final String LINK_REGEX = ".*<a id=\"next\" href=\"(http://fucking-great-advice.ru/advice/\\d*/)\" .*";
+
+    private static final Pattern LINK_PATTERN = Pattern.compile(LINK_REGEX);
+
+    private static final String ADVICE_REGEX = "<p id=\"advice\">(.*)</p>";
+
+    private static final Pattern ADVICE_PATTERN = Pattern.compile(ADVICE_REGEX);
+
+    private static String nextAdvice;
 
     public static String getTodayAdvice(Context context) {
         try {
@@ -63,8 +83,52 @@ public class AdviceUpdater {
     }
 
     public static String getRandomAdvice(Context context) {
-        // TODO implementation
-        Random random = new Random();
-        return String.valueOf(random.nextInt());
+        HttpURLConnection connection = null;
+        try {
+            URL serverAddress = new URL(nextAdvice == null ? MAIN_PAGE_URL : nextAdvice);
+            connection = (HttpURLConnection) serverAddress.openConnection();
+            connection.connect();
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream(), "windows-1251"));
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+            while ((line = rd.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+
+            String page = sb.toString();
+            nextAdvice = parseNextAdviceUrl(page);
+            return parseAdvice(context, page);
+        } catch (MalformedURLException e) {
+            Log.e(TAG, "Incorrect URL exception", e);
+        } catch (ProtocolException e) {
+            Log.e(TAG, "Protocol exception", e);
+        } catch (IOException e) {
+            Log.e(TAG, "IO exception", e);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return context.getString(R.string.connection_problem);
+    }
+
+    private static String parseAdvice(Context context, String page) {
+        Matcher matcher = ADVICE_PATTERN.matcher(page);
+        if (matcher.find()) {
+            return matcher.group(1).replaceAll("&.*;", "");
+        } else {
+            return context.getString(R.string.connection_problem);
+        }
+    }
+
+    private static String parseNextAdviceUrl(String page) {
+        Matcher matcher = LINK_PATTERN.matcher(page);
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return MAIN_PAGE_URL;
+        }
     }
 }
