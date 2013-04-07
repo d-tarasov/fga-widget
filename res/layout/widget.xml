@@ -29,33 +29,20 @@
         android:id="@+id/fucking_great_advice"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/refresh"
-        android:paddingLeft="3dp"
-        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
         android:textSize="16sp"
         android:text="@string/fucking_great_advice"
         android:textColor="@android:color/black"/>
 
-    <ImageView
-        android:layout_height="fill_parent"
-        android:layout_width="wrap_content"
-        android:layout_alignBottom="@+id/fucking_great_advice"
-        android:layout_toLeftOf="@+id/refresh"
-        android:background="@drawable/divider_vertical_bright"/>
-
     <ImageButton
-        android:id="@id/refresh"
-        android:background="@drawable/refresh_btn"
+        android:id="@+id/refresh"
+        android:background="@null"
+        android:src="@drawable/refresh_btn"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_height="28dp"
-        android:layout_width="28dp"/>
-
-    <ImageView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_below="@+id/fucking_great_advice"
-        android:background="@drawable/divider_horizontal_bright"/>
+        android:layout_height="42dp"
+        android:layout_width="42dp"/>
 
     <TextView
         android:id="@+id/advice"
@@ -63,8 +50,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/fucking_great_advice"
         android:gravity="center"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
+        android:padding="5dp"
         android:text="@string/wait_for_connection"
         android:textSize="20sp"
         android:textColor="@android:color/black"/>
