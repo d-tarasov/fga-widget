@@ -17,6 +17,7 @@
 package com.devoxy.fgawidget.web;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 import com.devoxy.fgawidget.R;
 import org.w3c.dom.Document;
@@ -118,7 +119,7 @@ public class AdviceUpdater {
         Matcher matcher = ADVICE_PATTERN.matcher(page);
         if (matcher.find()) {
             String advice = matcher.group(1);
-            return advice.replaceAll("&.*;", " ").replaceAll("<.*>", "");
+            return Html.fromHtml(advice).toString();
         } else {
             return context.getString(R.string.connection_problem);
         }
