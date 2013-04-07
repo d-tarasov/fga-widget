@@ -117,7 +117,8 @@ public class AdviceUpdater {
     private static String parseAdvice(Context context, String page) {
         Matcher matcher = ADVICE_PATTERN.matcher(page);
         if (matcher.find()) {
-            return matcher.group(1).replaceAll("&.*;", "");
+            String advice = matcher.group(1);
+            return advice.replaceAll("&.*;", " ").replaceAll("<.*>", "");
         } else {
             return context.getString(R.string.connection_problem);
         }
