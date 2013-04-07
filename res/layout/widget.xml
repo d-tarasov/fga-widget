@@ -41,8 +41,8 @@
         android:src="@drawable/refresh_btn"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_height="42dp"
-        android:layout_width="42dp"/>
+        android:layout_height="40dp"
+        android:layout_width="40dp"/>
 
     <TextView
         android:id="@+id/advice"

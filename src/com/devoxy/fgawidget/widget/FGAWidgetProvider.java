@@ -26,6 +26,7 @@ import android.widget.RemoteViews;
 import com.devoxy.fgawidget.R;
 import com.devoxy.fgawidget.service.UpdateWidgetService;
 import com.devoxy.fgawidget.web.AdviceUpdater;
+import com.dmitriy.tarasov.android.intents.IntentUtils;
 
 /**
  * Created by Dmitriy Tarasov.
@@ -63,6 +64,12 @@ public class FGAWidgetProvider extends AppWidgetProvider {
             advice = context.getString(R.string.connection_problem);
         }
         updateViews.setTextViewText(R.id.advice, "- " + advice);
+
+        Intent share = getShareIntent(context, advice);
+        if (IntentUtils.isIntentAvailable(context, share)) {
+            PendingIntent pendingShare = PendingIntent.getActivity(context, 0, share, PendingIntent.FLAG_UPDATE_CURRENT);
+            updateViews.setOnClickPendingIntent(R.id.root, pendingShare);
+        }
         return updateViews;
     }
 
@@ -76,5 +83,11 @@ public class FGAWidgetProvider extends AppWidgetProvider {
         Intent active = new Intent(context, FGAWidgetProvider.class);
         active.setAction(ACTION_WIDGET_RECEIVER);
         return PendingIntent.getBroadcast(context, 0, active, 0); // TODO magic constants
+    }
+
+    private Intent getShareIntent(Context context, String advice) {
+        String title = context.getString(R.string.fucking_great_advice);
+        Intent shareIntent = IntentUtils.shareText(title, advice);
+        return Intent.createChooser(shareIntent, context.getString(R.string.share_with_friends));
     }
 }
